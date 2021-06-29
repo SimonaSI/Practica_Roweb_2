@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 using WebApplication2.Business;
 using WebApplication2.Domain;
@@ -38,42 +40,58 @@ namespace WebApplication2.Controllers
 
             return new CategoryRepresentation()
             {
-                
+
             };
         }
 
-        //post
-        [HttpPost]
 
-        public CategoryRepresentation Insert(Category category)
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, Category category)
         {
-            _repo.InsertCategory(category);
-            return new CategoryRepresentation
+            try
             {
-                
-            };
-        }
-
-        //put
-
-        [HttpPatch("{id}")]
-        public CategoryRepresentation Update(int id, Category category)
-        {
-            var existingCategory = _repo.GetCategoryByID(id);
-            if (existingCategory != null)
-            {
-                category.CategoryID = existingCategory.CategoryID;
-                _repo.UpdateCategory(category);
-
-                return new CategoryRepresentation
+                if (id != category.CategoryID)
                 {
-                    
-                };
+                    return BadRequest("Id");
+                }
+                var data = _repo.GetCategoryByID(id);
+                if (data == null)
+                {
+                    return NotFound("Null");
+                }
+                var updateCategory = _repo.UpdateCategory(category);
+                return Ok(updateCategory);
+
             }
-            return new CategoryRepresentation
+            catch (Exception)
             {
-                
-            };
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+        // POST
+        [HttpPost]
+        public IActionResult AddCategory(Category category)
+        {
+            try
+            {
+                if (category == null)
+                {
+                    return BadRequest("Null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid");
+                }
+
+                var NewCategory = _repo.InsertCategory(category);
+
+                return CreatedAtAction("GetAll", new { CategoryId = category.CategoryID }, category);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
 
@@ -87,12 +105,12 @@ namespace WebApplication2.Controllers
                 _repo.DeleteCategory(category);
                 return new CategoryRepresentation
                 {
-                    
+
                 };
             }
             return new CategoryRepresentation
             {
-                
+
             };
         }
 

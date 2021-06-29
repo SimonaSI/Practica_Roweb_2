@@ -43,11 +43,21 @@ namespace WebApplication2.Controllers
             return NotFound($"Product with Id: {id} was not found");
         }
 
-        [HttpPost("Create")]
-        public IActionResult Insert(Product product)
+        [HttpPost]
+        [Route("api/product")]
+        public IActionResult AddProduct([FromBody] Product product)
         {
-            _repo.InsertProduct(product);
-            return Ok(product);
+
+            if (product == null)
+            {
+                return BadRequest("Null");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid");
+            }
+            var NewCategory = _repo.InsertProduct(product);
+            return CreatedAtAction("GetProducts", new { ProductId = product.ProductID }, product);
         }
 
         [HttpDelete("Delete/{id}")]
@@ -65,10 +75,10 @@ namespace WebApplication2.Controllers
         [HttpPatch("{id}")]
         public IActionResult Update(int id, Product product)
         {
-            var existingProduct = _repo.GetProductByID(id);
-            if (existingProduct != null)
+            var Product = _repo.GetProductByID(id);
+            if (Product != null)
             {
-                product.ProductID = existingProduct.ProductID;
+                product.ProductID = Product.ProductID;
                 _repo.UpdateProduct(product);
             }
             return Ok(product);
@@ -79,8 +89,8 @@ namespace WebApplication2.Controllers
         [Route("api/product/{id}/{fileName}")]
         public IActionResult GetImage(int id, string fileName)
         {
-            string ext = Path.GetExtension(fileName).ToLower();
-            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "images", fileName + ext);
+            string e = Path.GetExtension(fileName).ToLower();
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "images", fileName + e);
             var image = System.IO.File.OpenRead(imagePath);
             return File(image, "image/jpeg");
         }
