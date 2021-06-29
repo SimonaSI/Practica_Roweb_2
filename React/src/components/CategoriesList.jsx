@@ -37,24 +37,26 @@ function CategoriesList() {
     function handleShowUpdate() {
         setUpdate({showModal: true})
     }
-    function handleChangeForm(event) {
+    function handleChangeInput(event) {
         const newData = { ...data }
         newData[event.target.name] = event.target.value;
         setCategories(newData)
     }
     function deleteCategory(categoryId) {
-        ApiHelper.ProductCategories.deleteCategory(categoryId)
+        ApiHelper.ProductCategories.delete(categoryId)
             .then((res) => console.log(res))
             window.location.reload();
     }
     function UpdateCategory(categoryId, e) {
-        alert(categoryId)
+        ApiHelper.ProductCategories.update(categoryId)
+        .then((res) => console.log(res))
+        window.location.reload();
     }
     function submit(e) {
         e.preventDefault();
         const response = { name: data.name, description: data.description }
         console.log(response)
-        ApiHelper.ProductCategories.postMethod(response).then((response) => console.log(response))
+       ApiHelper.ProductCategories.post(response).then((response) => console.log(response))
         window.location.reload();
     }
     return (
@@ -79,7 +81,7 @@ function CategoriesList() {
                                     {c.name}
                                 </td>
                                 <td>
-                                    Products: {c.description}
+                                    {c.description}
                                 </td>
                                 <td>
                                     <Button variant="link" onClick={() => handleShowUpdate()}>Update</Button>
@@ -97,12 +99,12 @@ function CategoriesList() {
                     <Form >
                         <Form.Group >
                           <Form.Label>Name:</Form.Label>
-                          <Form.Control onChange={(event) => handleChangeForm(event)} id="name" name="name" value={data.name } type="text" placeholder="Name"></Form.Control>
+                          <Form.Control onChange={(event) => handleChangeInput(event)} id="name" name="name" value={data.name } type="text" placeholder="Name"></Form.Control>
                         </Form.Group>
                   
                    <Form.Group>
                     <Form.Label>Desciption</Form.Label>
-                    <Form.Control type="text" onChange={(event) => handleChangeForm(event)}  id="description" name="description" value={data.description}  placeholder="Description"></Form.Control>
+                    <Form.Control type="text" onChange={(event) => handleChangeInput(event)}  id="description" name="description" value={data.description}  placeholder="Description"></Form.Control>
                    </Form.Group>
 
                    </Form>
@@ -122,11 +124,11 @@ function CategoriesList() {
                     <Form >
                         <Form.Group >
                           <Form.Label>Name:</Form.Label>
-                          <Form.Control onChange={(event) => handleChangeForm(event)} id="name" name="name" value={data.name } type="text" placeholder="Name"></Form.Control>
+                          <Form.Control onChange={(event) => handleChangeInput(event)} id="name" name="name" value={data.name } type="text" placeholder="Name"></Form.Control>
                         </Form.Group>
                    <Form.Group>
                     <Form.Label>Desciption</Form.Label>
-                    <Form.Control type="text" onChange={(event) => handleChangeForm(event)}  id="description" name="description" value={data.description}  placeholder="Description"></Form.Control>
+                    <Form.Control type="text" onChange={(event) => handleChangeInput(event)}  id="description" name="description" value={data.description}  placeholder="Description"></Form.Control>
                    </Form.Group>
                    </Form>
                 </Modal.Body>

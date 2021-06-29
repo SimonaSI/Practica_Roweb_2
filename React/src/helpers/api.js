@@ -5,14 +5,14 @@ const ApiClient = {
   get: (url, headers = {}) => {
     return ApiClient.makeRequest(`${API_ROUTE}/${url}`, "GET", {}, headers);
   },
-  post:(url,headers)=>{
- return ApiClient.makeRequest(`${API_ROUTE}/${url}`,"POST",headers)
+  post:(url,data)=>{
+ return ApiClient.makeRequest(`${API_ROUTE}/${url}`,"POST",data)
   },
-  delete:(url,id,headers = {})=>{
-    return ApiClient.makeRequest(`${API_ROUTE}/${url}`,"DELETE",id,headers)
+  delete:(url,id,data)=>{
+    return ApiClient.makeRequest(`${API_ROUTE}/${url}`,"DELETE",id,data)
   },
-  put:(url,id,headers)=>{
-return ApiClient.makeRequest(`${API_ROUTE}/${url}`,"PUT",id,headers)
+  put:(url,id,data)=>{
+return ApiClient.makeRequest(`${API_ROUTE}/${url}`,"PUT",id,data)
   },
   makeRequest: async (url, type, params = {}, headers = {}) => {
     try {

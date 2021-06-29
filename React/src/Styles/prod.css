@@ -5,7 +5,7 @@
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
-    min-height: 31.25rem;
+    min-height: 10rem;
     cursor: pointer;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .card-info span {
-    font-family: "Trebuchet MS";
+    font-family: "Arial";
     color: #111;
     display: block;
     font-size: 1.5rem;
@@ -51,7 +51,7 @@
 }
 
 .base-price {
-    font-family: "Trebuchet MS";
+    font-family: "Arial";
     font-size: 0.688rem;
     text-decoration: line-through;
     line-height: 0.125rem;
@@ -62,10 +62,28 @@
 }
 
 .price {
-    font-family: "Trebuchet MS";
+    font-family: "Arial";
     font-size: 1.5rem;
     width: 7.5rem;
     float: right;
     text-align: left;
     clear: both;
+}
+
+.cardDeck{
+
+   display: flex;
+   flex-wrap: wrap;
+}
+
+.productCard{
+    width: 200px; 
+}
+
+.card-text-el{
+   margin-bottom: 0px;
+}
+
+.basePrice{
+    color: red;
 }

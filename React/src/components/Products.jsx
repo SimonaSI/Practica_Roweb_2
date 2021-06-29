@@ -16,20 +16,22 @@ const Products=(props)=>{
     return(
       <div className="container">
           <div className="row">
-            <CardDeck>
+            <CardDeck className="cardDeck">
              {
                product.map((p)=>(
                  <div className="col" >
-                 <Card >
-                  <Card.Img variant="top" src={p.image} className="image"/>
-                  <Card.Body>
-                  <Card.Text>
-                      {p.name} {p.description} {p.basePrice}
-                      <h2>{p.price}</h2>
-                  </Card.Text>
-                  </Card.Body>
-                   </Card>
-                   </div>
+                 <Card className="productCard">
+                      <Card.Img variant="top" src={p.image} className="image"/>
+                      <Card.Body>
+                      <Card.Text className="cardText">
+                          <p className="card-text-el">{p.name}</p>
+                          <p className="card-text-el">{p.description}</p>
+                          <p className="card-text-el basePrice"> {p.basePrice}</p>  
+                          <h2 className="card-text-el">{p.price}</h2>
+                      </Card.Text>
+                      </Card.Body>
+                  </Card>
+                </div>
                    ))
              }
             </CardDeck>              

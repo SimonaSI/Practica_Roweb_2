@@ -43,7 +43,7 @@ function AddProduct() {
         )
     }
     function submitUpdate(name) {
-        alert(name)
+        alert("Comming soon!")
     }
     function submit(e) {
         e.preventDefault();
@@ -55,26 +55,9 @@ function AddProduct() {
             categoryId: products.categoryId,
         }
         console.log(formValues)
-        ApiHelper.Products.postProduct(formValues)
-            .then((res) => console.log(res))
-        const formDataValues = { image }
-        window.location.reload();
-        let formData = new FormData();
-        formData.append('File', image);
-        console.log(formDataValues)
-        fetch(
-            'https://localhost:44387/api/product/image/45',
-            {
-                method: 'POST',
-                body: formData,
-            })
-            .then((response) => response.json())
-            .then((result) => {
-                console.log('Success:', result);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        ApiHelper.Products.post(formValues)
+            .then((res) => console.log(res));
+       
     }
     function handleInputChange(e) {
         const newData = { ...products }
@@ -83,8 +66,7 @@ function AddProduct() {
         console.log(newData);
     }
     function deleteProduct(productId) {
-        ApiHelper.Products.deleteProduct(productId).then((res) => console.log(res))
-        window.location.reload();
+        alert("Comming soon!")
     }
     return (
         <div>
